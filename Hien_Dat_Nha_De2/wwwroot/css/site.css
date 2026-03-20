@@ -1,22 +1,82 @@
+/* FONT SIZE */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* BODY BACKGROUND */
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background: linear-gradient(to right, #eef2f3, #dfe9f3);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* BUTTON STYLE */
+.btn {
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+
+    /* INPUT FOCUS */
+    .btn:focus,
+    .btn:active:focus,
+    .btn-link.nav-link:focus,
+    .form-control:focus,
+    .form-check-input:focus {
+        box-shadow: 0 0 0 0.15rem white, 0 0 0 0.3rem #0d6efd;
+        border-color: #0d6efd;
+    }
+
+/* CARD UI */
+.card {
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+/* TABLE STYLE */
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+    .table thead {
+        background: linear-gradient(45deg, #0d6efd, #6610f2);
+        color: white;
+    }
+
+/* SHADOW */
+.shadow-lg {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* NAVBAR TEXT */
+.navbar .nav-link {
+    transition: 0.2s;
+}
+
+    .navbar .nav-link:hover {
+        color: #ffd700 !important;
+    }
+
+/* FOOTER */
+footer {
+    font-size: 14px;
+}
+
+/* HEADING */
+h1, h2, h3 {
+    font-weight: bold;
 }

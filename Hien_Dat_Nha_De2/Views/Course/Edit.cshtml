@@ -1,0 +1,35 @@
+﻿@model Hien_Dat_Nha_De2.Models.Course
+@{
+    ViewData["Title"] = "Sửa Khóa học";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label">Tên Khóa Học</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="InstructorId" class="form-label">Giảng viên phụ trách</label>
+                <select asp-for="InstructorId" class="form-select" asp-items="ViewBag.Instructors">
+                    <option value="">-- Chọn giảng viên --</option>
+                </select>
+                <span asp-validation-for="InstructorId" class="text-danger"></span>
+            </div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-success">Cập nhật</button>
+                <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div>

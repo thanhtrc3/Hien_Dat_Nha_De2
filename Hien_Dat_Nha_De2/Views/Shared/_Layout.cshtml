@@ -1,49 +1,146 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>@ViewData["Title"] - Hien_Dat_Nha_De2</title>
+
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Hien_Dat_Nha_De2.styles.css" asp-append-version="true" />
+
+    <!-- Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Hien_Dat_Nha_De2</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+<body style="background: linear-gradient(to right, #eef2f3, #dfe9f3);">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow"
+         style="background: linear-gradient(45deg,#0d6efd,#6610f2);">
+
+        <div class="container-fluid">
+
+            <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
+                <i class="fa-solid fa-graduation-cap"></i> Hien_Dat_Nha_De2
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+
+                <!-- MENU LEFT -->
+                <ul class="navbar-nav me-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home">
+                            <i class="fa fa-home"></i> Trang chủ
+                        </a>
+                    </li>
+
+                    @if (User.IsInRole("Admin"))
+                    {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" href="/Instructor">
+                                <i class="fa fa-chalkboard-teacher"></i> Giảng viên
+                            </a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" href="/Course">
+                                <i class="fa fa-book"></i> Khóa học
+                            </a>
                         </li>
-                    </ul>
-                </div>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/User">
+                                <i class="fa fa-users"></i> Người dùng
+                            </a>
+                        </li>
+                    }
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Enrollment">
+                                <i class="fa fa-pen"></i> Đăng ký
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+
+                <!-- LOGIN AREA -->
+                <ul class="navbar-nav">
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <span class="nav-link text-warning fw-bold">
+                                👋 @User.Identity.Name
+                            </span>
+                        </li>
+
+                        <li class="nav-item">
+                            <form asp-area="Identity" asp-page="/Account/Logout" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm rounded-pill">
+                                    <i class="fa fa-sign-out-alt"></i> Đăng xuất
+                                </button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
+                                <i class="fa fa-sign-in-alt"></i> Đăng nhập
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
+                                <i class="fa fa-user-plus"></i> Đăng ký
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </div>
+    </nav>
+
+    <!-- ALERT -->
+    <div class="container mt-3">
+        @if (TempData["success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show shadow-sm">
+                <i class="fa fa-check-circle"></i> @TempData["success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Hien_Dat_Nha_De2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- CONTENT -->
+    <div class="container mt-3 mb-4">
+        <div class="p-4 bg-white rounded-4 shadow-lg">
+            @RenderBody()
         </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center text-muted mb-3">
+        <hr />
+        <p>© 2026 - Hien_Dat_Nha_De2 | ASP.NET Core MVC</p>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <!-- JS -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

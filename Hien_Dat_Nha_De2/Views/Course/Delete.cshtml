@@ -1,0 +1,28 @@
+﻿@model Hien_Dat_Nha_De2.Models.Course
+@{
+    ViewData["Title"] = "Xóa Khóa học";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="alert alert-danger">
+    <h4>Bạn có chắc chắn muốn xóa khóa học này không?</h4>
+    <p>Hành động này không thể hoàn tác.</p>
+</div>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Mã Khóa Học</dt>
+        <dd class="col-sm-9">@Model.Id</dd>
+
+        <dt class="col-sm-3">Tên Khóa Học</dt>
+        <dd class="col-sm-9">@Model.Title</dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Xác nhận Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>

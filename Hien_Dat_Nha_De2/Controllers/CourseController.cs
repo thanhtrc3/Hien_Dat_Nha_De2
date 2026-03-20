@@ -20,7 +20,8 @@ namespace Hien_Dat_Nha_De2.Controllers
 
         public IActionResult Index()
         {
-            return View(courseRepo.GetAll());
+            var courses = courseRepo.GetAll(c => c.Instructor);
+            return View(courses);
         }
 
         public IActionResult Create()

@@ -1,35 +1,37 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Hien_Dat_Nha_De2.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Hien_Dat_Nha_De2.Models;
+using Hien_Dat_Nha_De2.Repositories;
 
 namespace Hien_Dat_Nha_De2.Controllers
 {
     public class EnrollmentController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IGenericRepository<Enrollment> _enrollRepo;
+        private readonly IGenericRepository<Course> _courseRepo;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public EnrollmentController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public EnrollmentController(
+            IGenericRepository<Enrollment> enrollRepo,
+            IGenericRepository<Course> courseRepo,
+            UserManager<ApplicationUser> userManager)
         {
-            _context = context;
+            _enrollRepo = enrollRepo;
+            _courseRepo = courseRepo;
             _userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            var data = _context.Enrollments
-                .Include(e => e.Course)
-                .Include(e => e.User)
-                .ToList();
-
+            // Yêu cầu 7: Dùng Include lấy Course và User
+            var data = _enrollRepo.GetAll(e => e.Course, e => e.User);
             return View(data);
         }
 
         public IActionResult Create()
         {
-            ViewBag.Courses = _context.Courses.ToList();
+            ViewBag.Courses = new SelectList(_courseRepo.GetAll(), "Id", "Title");
             return View();
         }
 
@@ -37,6 +39,10 @@ namespace Hien_Dat_Nha_De2.Controllers
         public async Task<IActionResult> Create(int courseId)
         {
             var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Challenge(); // Yêu cầu đăng nhập nếu chưa
+            }
 
             var enroll = new Enrollment
             {
@@ -45,8 +51,8 @@ namespace Hien_Dat_Nha_De2.Controllers
                 EnrollmentDate = DateTime.Now
             };
 
-            _context.Enrollments.Add(enroll);
-            await _context.SaveChangesAsync();
+            _enrollRepo.Insert(enroll);
+            _enrollRepo.Save();
 
             return RedirectToAction("Index");
         }

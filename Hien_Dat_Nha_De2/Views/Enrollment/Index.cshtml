@@ -1,5 +1,29 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Hien_Dat_Nha_De2.Models.Enrollment>
 @{
+    ViewData["Title"] = "Danh sách Đăng ký Khóa học";
 }
+
+<h2>@ViewData["Title"]</h2>
+<p><a asp-action="Create" class="btn btn-primary">Ghi danh vào khóa học</a></p>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Tên Khóa Học</th>
+            <th>Tên Người Đăng Ký</th>
+            <th>Ngày Đăng Ký</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@(item.Course != null ? item.Course.Title : "N/A")</td>
+                <td>@(item.User != null ? item.User.FullName : "N/A")</td>
+                <td>@item.EnrollmentDate.ToString("dd/MM/yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>

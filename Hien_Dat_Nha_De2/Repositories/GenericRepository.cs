@@ -1,40 +1,47 @@
 ﻿using Hien_Dat_Nha_De2.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : class
+namespace Hien_Dat_Nha_De2.Repositories
 {
-    private ApplicationDbContext _context;
-    private DbSet<T> table;
-
-    public GenericRepository(ApplicationDbContext context)
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        _context = context;
-        table = _context.Set<T>();
-    }
+        private ApplicationDbContext _context;
+        private DbSet<T> table;
 
-    public IEnumerable<T> GetAll() => table.ToList();
+        public GenericRepository(ApplicationDbContext context)
+        {
+            _context = context;
+            table = _context.Set<T>();
+        }
 
-    public T GetById(object id) => table.Find(id);
+        // Cập nhật hàm GetAll để xử lý Include
+        public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = table;
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            return query.ToList();
+        }
 
-    public void Insert(T obj)
-    {
-        table.Add(obj);
-    }
+        public T GetById(object id) => table.Find(id);
 
-    public void Update(T obj)
-    {
-        table.Attach(obj);
-        _context.Entry(obj).State = EntityState.Modified;
-    }
+        public void Insert(T obj) => table.Add(obj);
 
-    public void Delete(object id)
-    {
-        T existing = table.Find(id);
-        table.Remove(existing);
-    }
+        public void Update(T obj)
+        {
+            table.Attach(obj);
+            _context.Entry(obj).State = EntityState.Modified;
+        }
 
-    public void Save()
-    {
-        _context.SaveChanges();
+        public void Delete(object id)
+        {
+            T existing = table.Find(id);
+            if (existing != null) table.Remove(existing);
+        }
+
+        public void Save() => _context.SaveChanges();
     }
 }

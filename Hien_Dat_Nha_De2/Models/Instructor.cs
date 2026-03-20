@@ -17,7 +17,7 @@ namespace Hien_Dat_Nha_De2.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        // Quan hệ 1-n với Courses
-        public ICollection<Course> Courses { get; set; }
+        // THÊM DẤU CHẤM HỎI VÀO ĐÂY (?)
+        public ICollection<Course>? Courses { get; set; }
     }
 }

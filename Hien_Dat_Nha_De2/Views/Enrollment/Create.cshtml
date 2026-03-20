@@ -1,5 +1,21 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Đăng ký Khóa học mới";
 }
+
+<h2>@ViewData["Title"]</h2>
+<div class="alert alert-info">
+    Lưu ý: Bạn phải đăng nhập thì hệ thống mới biết bạn là ai để ghi danh!
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div class="mb-3">
+                <label class="form-label">Chọn Khóa học muốn đăng ký</label>
+                <select name="courseId" class="form-select" asp-items="ViewBag.Courses"></select>
+            </div>
+            <button type="submit" class="btn btn-success">Xác nhận Đăng ký</button>
+            <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+        </form>
+    </div>
+</div>

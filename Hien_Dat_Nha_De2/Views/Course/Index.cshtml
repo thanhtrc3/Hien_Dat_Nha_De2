@@ -1,17 +1,17 @@
-﻿@model IEnumerable<Hien_Dat_Nha_De2.Models.Instructor>
+﻿@model IEnumerable<Hien_Dat_Nha_De2.Models.Course>
 @{
-    ViewData["Title"] = "Danh sách Giảng viên";
+    ViewData["Title"] = "Danh sách Khóa học";
 }
 
 <h2>@ViewData["Title"]</h2>
-<p><a asp-action="Create" class="btn btn-primary">Thêm mới Giảng viên</a></p>
+<p><a asp-action="Create" class="btn btn-primary">Thêm mới Khóa học</a></p>
 
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
         <tr>
             <th>ID</th>
-            <th>Tên Giảng Viên</th>
-            <th>Email</th>
+            <th>Tên Khóa Học</th>
+            <th>Giảng viên phụ trách</th>
             <th>Hành động</th>
         </tr>
     </thead>
@@ -20,8 +20,8 @@
         {
             <tr>
                 <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.Email</td>
+                <td>@item.Title</td>
+                <td>@(item.Instructor != null ? item.Instructor.Name : "Chưa có")</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Sửa</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Xóa</a>

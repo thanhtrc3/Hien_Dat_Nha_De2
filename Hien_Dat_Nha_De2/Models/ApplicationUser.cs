@@ -10,7 +10,7 @@ namespace Hien_Dat_Nha_De2.Models
         [MaxLength(100)]
         public string FullName { get; set; }
 
-        // Quan hệ 1-n với Enrollments
-        public ICollection<Enrollment> Enrollments { get; set; }
+        // Quan hệ 1-n với Enrollments (Thêm dấu ?)
+        public ICollection<Enrollment>? Enrollments { get; set; }
     }
 }

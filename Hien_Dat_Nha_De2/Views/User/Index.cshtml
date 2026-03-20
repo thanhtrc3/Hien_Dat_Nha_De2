@@ -1,5 +1,31 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Hien_Dat_Nha_De2.Models.ApplicationUser>
 @{
+    ViewData["Title"] = "Danh sách Người học";
 }
+
+<h2>@ViewData["Title"]</h2>
+<p><a asp-action="Create" class="btn btn-primary">Thêm Người học (Tài khoản)</a></p>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Tên đăng nhập (Username)</th>
+            <th>Họ và Tên (FullName)</th>
+            <th>Email</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.FullName</td>
+                <td>@item.Email</td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

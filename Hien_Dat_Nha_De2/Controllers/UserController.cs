@@ -31,5 +31,37 @@ namespace Hien_Dat_Nha_De2.Controllers
             await _userManager.DeleteAsync(user);
             return RedirectToAction("Index");
         }
+        // Thêm hàm Create GET
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // Thêm hàm Create POST
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.Username,
+                    Email = model.Email,
+                    FullName = model.FullName
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(model);
+        }
     }
 }

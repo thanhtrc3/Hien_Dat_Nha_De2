@@ -1,0 +1,23 @@
+﻿@model Hien_Dat_Nha_De2.Models.Course
+@{
+    ViewData["Title"] = "Thêm Khóa học";
+}
+
+<h2>@ViewData["Title"]</h2>
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label">Tên Khóa Học</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Chọn Giảng viên</label>
+                <select asp-for="InstructorId" class="form-select" asp-items="ViewBag.Instructors"></select>
+            </div>
+            <button type="submit" class="btn btn-success">Lưu</button>
+            <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+        </form>
+    </div>
+</div>
